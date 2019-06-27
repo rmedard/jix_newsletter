@@ -20,8 +20,8 @@ function jix_newsletter_webform_submission_insert(EntityInterface $entity)
 
             $client = Drupal::httpClient();
             $request = $client->post($subscriptionUrl, array('form_params' => array(
-                'email' => $entity->get('gen_news_email')->value,
-                'name' => $entity->get('gen_news_noms')->value
+                'email' => $entity->getElementData('gen_news_email'),
+                'name' => $entity->getElementData('gen_news_noms')
             )));
             Drupal::logger('jix_newsletter')->info(json_encode($request->getBody()));
         }
