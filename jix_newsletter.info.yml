@@ -1,5 +1,6 @@
 name: Jix Newsletter
 type: module
 description: 'A Jix module that handles newsletters and settings'
+package: JIX Custom Modules
 core: 8.x
 configure: jix_newsletter.general.settings
