@@ -1,0 +1,7 @@
+jix_newsletter.general.settings:
+  path: '/admin/manage/settings/newsletter'
+  defaults:
+    _form: '\Drupal\jix_newsletter\Form\NewsletterSettingsForm'
+    _title: 'General newsletter settings'
+  requirements:
+    _permission: 'administer site configuration'
