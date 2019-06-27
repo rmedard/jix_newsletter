@@ -1,26 +1,29 @@
 <?php
 /**
-* @file
-* A description of what your module does.
-*/
+ * @file
+ * A description of what your module does.
+ */
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\webform\Entity\WebformSubmission;
 
 /**
- * Implements hook_entity_create().
+ * Implements hook_ENTITY_TYPE_insert().
  */
-function jix_newsletter_entity_create(EntityInterface $entity)
+function jix_newsletter_webform_submission_insert(EntityInterface $entity)
 {
-    if ($entity instanceof WebformSubmission) {
-        Drupal::logger('jix_newsletter')->info('WebformId: ' . $entity->getWebform()->id());
-    }
-}
+    if ($entity instanceof WebformSubmission and $entity->bundle() == 'general_newsletter') {
+        $config = Drupal::config('jix_newsletter.general.settings');
+        $subscriptionUrl = $config->get('general_newsletter_url');
+        if (isset($subscriptionUrl)) {
+            // https://newsletter.jobenrdc.com/index.php/addNewsletterSubscriber?email=jimmy.nsenga@gmail.com&name=Jimmy%20Nsenga
 
-/**
- * Implements hook_ENTITY_TYPE_create().
- */
-function jix_newsletter_webform_submission_create(EntityInterface $entity)
-{
-    Drupal::logger('jix_newsletter')->info('WebformBundle: ' . $entity->bundle());
+            $client = Drupal::httpClient();
+            $request = $client->post($subscriptionUrl, array('form_params' => array(
+                'email' => $entity->get('gen_news_email')->value,
+                'name' => $entity->get('gen_news_noms')->value
+            )));
+            Drupal::logger('jix_newsletter')->info(json_encode($request->getBody()));
+        }
+    }
 }

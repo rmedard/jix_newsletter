@@ -43,13 +43,14 @@ class NewsletterSettingsForm extends ConfigFormBase
     /**
      * {@inheritdoc}
      */
-    public function buildForm(array $form, FormStateInterface $form_state){
+    public function buildForm(array $form, FormStateInterface $form_state)
+    {
         $config = $this->config(static::SETTINGS);
         $form['general_newsletter_url'] = [
             '#type' => 'textfield',
             '#title' => t('General newsletter subscription url'),
             '#default_value' => $config->get('general_newsletter_url'),
-            '#description' =>t('Enter a valid and absolute URL. No query parameters.')
+            '#description' => t('Enter a valid and absolute URL. No query parameters.')
         ];
         return parent::buildForm($form, $form_state);
     }
@@ -57,17 +58,23 @@ class NewsletterSettingsForm extends ConfigFormBase
     /**
      * {@inheritdoc}
      */
-    public function validateForm(array &$form, FormStateInterface $form_state) {
+    public function validateForm(array &$form, FormStateInterface $form_state)
+    {
         $url = $form_state->getValue('general_newsletter_url');
-        if (isset($url) and !UrlHelper::isValid($url, true)){
-            $form_state->setErrorByName('general_newsletter_url', 'Invalid URL. This url has to be valid and absolute.');
+        if (isset($url)) {
+            if (!UrlHelper::isValid($url, true)) {
+                $form_state->setErrorByName('general_newsletter_url', 'Invalid URL. This url has to be valid and absolute.');
+            } elseif (strpos($url, '?') !== false) {
+                $form_state->setErrorByName('general_newsletter_url', 'Invalid URL. No query parameters required.');
+            }
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function submitForm(array &$form, FormStateInterface $form_state){
+    public function submitForm(array &$form, FormStateInterface $form_state)
+    {
         $this->configFactory->getEditable(static::SETTINGS)
             ->set('general_newsletter_url', $form_state->getValue('general_newsletter_url'))
             ->save();
