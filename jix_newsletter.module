@@ -22,5 +22,5 @@ function jix_newsletter_entity_create(EntityInterface $entity)
  */
 function jix_newsletter_webform_submission_create(EntityInterface $entity)
 {
-    Drupal::logger('jix_newsletter')->info('WebformId: ' . $entity->bundle());
+    Drupal::logger('jix_newsletter')->info('WebformBundle: ' . $entity->bundle());
 }
