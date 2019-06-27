@@ -16,3 +16,11 @@ function jix_newsletter_entity_create(EntityInterface $entity)
         Drupal::logger('jix_newsletter')->info('WebformId: ' . $entity->getWebform()->id());
     }
 }
+
+/**
+ * Implements hook_ENTITY_TYPE_create().
+ */
+function jix_newsletter_webform_submission_create(EntityInterface $entity)
+{
+    Drupal::logger('jix_newsletter')->info('WebformId: ' . $entity->bundle());
+}
