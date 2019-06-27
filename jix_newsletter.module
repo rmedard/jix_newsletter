@@ -3,3 +3,16 @@
 * @file
 * A description of what your module does.
 */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\webform\Entity\WebformSubmission;
+
+/**
+ * Implements hook_entity_create().
+ */
+function jix_newsletter_entity_create(EntityInterface $entity)
+{
+    if ($entity instanceof WebformSubmission) {
+        Drupal::logger('jix_newsletter')->info('WebformId: ' . $entity->getWebform()->id());
+    }
+}
