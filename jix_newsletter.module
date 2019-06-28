@@ -16,14 +16,12 @@ function jix_newsletter_webform_submission_insert(EntityInterface $entity)
         $config = Drupal::config('jix_newsletter.general.settings');
         $subscriptionUrl = $config->get('general_newsletter_url');
         if (isset($subscriptionUrl)) {
-            // https://newsletter.jobenrdc.com/index.php/addNewsletterSubscriber?email=jimmy.nsenga@gmail.com&name=Jimmy%20Nsenga
-
             $client = Drupal::httpClient();
             $request = $client->post($subscriptionUrl, array('form_params' => array(
                 'email' => $entity->getElementData('gen_news_email'),
-                'name' => $entity->getElementData('gen_news_noms')
+                'fullname' => $entity->getElementData('gen_news_noms')
             )));
-            Drupal::logger('jix_newsletter')->info(json_encode($request->getBody()));
+            Drupal::logger('jix_newsletter')->info('Code: ' . $request->getStatusCode() . ' | Body: ' . json_encode($request->getBody()));
         }
     }
 }
