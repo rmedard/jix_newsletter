@@ -17,11 +17,17 @@ function jix_newsletter_webform_submission_insert(EntityInterface $entity)
         $subscriptionUrl = $config->get('general_newsletter_url');
         if (isset($subscriptionUrl)) {
             $client = Drupal::httpClient();
+            $email = $entity->getElementData('gen_news_email');
+            $names = $entity->getElementData('gen_news_noms');
             $request = $client->post($subscriptionUrl, array('form_params' => array(
-                'email' => $entity->getElementData('gen_news_email'),
-                'fullname' => $entity->getElementData('gen_news_noms')
+                'email' => $email,
+                'fullname' => $names
             )));
-            Drupal::logger('jix_newsletter')->info('Code: ' . $request->getStatusCode() . ' | Body: ' . json_encode($request->getBody()));
+            if ($request->getStatusCode() == 200) {
+                Drupal::logger('jix_newsletter')->info('Successfully subscribed ' . $email . ' to General Newsletter');
+            } else {
+                Drupal::logger('jix_newsletter')->error('Subscription of ' . $email . ' to General Newsletter failed');
+            }
         }
     }
 }
