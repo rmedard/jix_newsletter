@@ -24,9 +24,12 @@ function jix_newsletter_webform_submission_insert(EntityInterface $entity)
                 'fullname' => $names
             )));
             if ($request->getStatusCode() == 200) {
-                Drupal::logger('jix_newsletter')->info('Successfully subscribed ' . $email . ' to General Newsletter');
+                Drupal::logger('jix_newsletter')->info('Successfully subscribed ' .
+                    $email . ' to General Newsletter');
             } else {
-                Drupal::logger('jix_newsletter')->error('Subscription of ' . $email . ' to General Newsletter failed');
+                Drupal::logger('jix_newsletter')->error('Subscription of ' .
+                    $email . ' to General Newsletter failed. Code: ' .
+                    $request->getStatusCode() . ' | Reason: ' . $request->getReasonPhrase());
             }
         }
     }
