@@ -16,10 +16,9 @@ function jix_newsletter_webform_submission_insert(EntityInterface $entity)
         $config = Drupal::config('jix_newsletter.general.settings');
         $subscriptionUrl = $config->get('general_newsletter_url');
         if (isset($subscriptionUrl)) {
-            $client = Drupal::httpClient();
             $email = $entity->getElementData('gen_news_email');
             $names = $entity->getElementData('gen_news_noms');
-            $request = $client->post($subscriptionUrl, array('form_params' => array(
+            $request = Drupal::httpClient()->post($subscriptionUrl, array('form_params' => array(
                 'email' => $email,
                 'fullname' => $names
             )));
