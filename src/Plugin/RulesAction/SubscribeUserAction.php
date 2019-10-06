@@ -40,13 +40,12 @@ class SubscribeUserAction extends RulesActionBase
         $email = $entity->getElementData('gen_news_email');
         $config = Drupal::config('jix_newsletter.general.settings');
         $subscriptionUrl = $config->get('general_newsletter_url');
-        $request = Drupal::httpClient()->post($subscriptionUrl, array('query' => array(
-            'email' => $email,
-            'name' => $names,
-            'newsletterId' => strval($newsletterId)
-        )));
-        Drupal::logger('jix_newsletter')->info('Action triggered, Names: ' . $entity->getElementData('gen_news_noms')
-            . ' | Email: ' . $entity->getElementData('gen_news_email') . ' | NewsletterId: ' . $newsletterId);
+        $request = Drupal::httpClient()->post($subscriptionUrl, array(
+            'form_params' => array(
+                'email' => $email,
+                'name' => $names,
+                'newsletterId' => strval($newsletterId)
+            )));
         Drupal::logger('jix_newsletter')->info(json_encode($request));
 
     }
