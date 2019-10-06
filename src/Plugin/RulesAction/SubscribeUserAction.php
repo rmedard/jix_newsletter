@@ -57,7 +57,7 @@ class SubscribeUserAction extends RulesActionBase
                 )));
         }
         if ($response instanceof ResponseInterface) {
-            Drupal::logger('jix_newsletter')->info(json_encode(json_decode($response, true)));
+            Drupal::logger('jix_newsletter')->info(json_encode($response));
         }
     }
 }
