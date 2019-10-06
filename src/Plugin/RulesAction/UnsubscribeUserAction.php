@@ -11,7 +11,7 @@ use GuzzleHttp\Exception\ClientException;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * Class SubscribeUserAction
+ * Class UnsubscribeUserAction
  * @package Drupal\jix_newsletter\Plugin\RulesAction
  *
  * @RulesAction(
