@@ -7,7 +7,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\rules\Core\RulesActionBase;
 
 /**
- * Class JirTestAction
+ * Class SubscribeUserAction
  * @package Drupal\jix_newsletter\Plugin\RulesAction
  *
  * @RulesAction(
