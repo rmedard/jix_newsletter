@@ -18,7 +18,12 @@ use Drupal\rules\Core\RulesActionBase;
  *      "entity" = @ContextDefinition(
  *          value = "entity",
  *          label = @Translation("Submission object"),
- *          description = @Translation("Submitted data.")
+ *          description = @Translation("Submitted data")
+ *       ),
+ *     "newsletterId" = @ContextDefinition(
+ *          value = "integer",
+ *          label = @Translation("Newsletter ID"),
+ *          description = @Translation("Identifier of the newsletter")
  *       )
  *     }
  * )
@@ -27,8 +32,22 @@ class SubscribeUserAction extends RulesActionBase
 {
     /**
      * @param EntityInterface $entity
+     * @param $newsletterId integer newsletter identifier
      */
-    protected function doExecute(EntityInterface $entity) {
-        Drupal::logger('jix_newsletter')->info('Action triggered, Names: ' . $entity->getElementData('gen_news_noms') . ' | Email: ' . $entity->getElementData('gen_news_email'));
+    protected function doExecute(EntityInterface $entity, $newsletterId)
+    {
+        $names = $entity->getElementData('gen_news_noms');
+        $email = $entity->getElementData('gen_news_email');
+        $config = Drupal::config('jix_newsletter.general.settings');
+        $subscriptionUrl = $config->get('general_newsletter_url');
+        $request = Drupal::httpClient()->post($subscriptionUrl, array('query' => array(
+            'email' => $email,
+            'name' => $names,
+            'newsletterId' => strval($newsletterId)
+        )));
+        Drupal::logger('jix_newsletter')->info('Action triggered, Names: ' . $entity->getElementData('gen_news_noms')
+            . ' | Email: ' . $entity->getElementData('gen_news_email') . ' | NewsletterId: ' . $newsletterId);
+        Drupal::logger('jix_newsletter')->info(json_encode($request));
+
     }
 }
