@@ -42,7 +42,6 @@ class SubscribeUserAction extends RulesActionBase
         $active = $entity->getElementData('gen_news_active');
         $config = Drupal::config('jix_newsletter.general.settings');
         $subscriptionUrl = $config->get('general_newsletter_url');
-
         $response = null;
         if (boolval($active)) {
             $response = Drupal::httpClient()->post($subscriptionUrl, array(
