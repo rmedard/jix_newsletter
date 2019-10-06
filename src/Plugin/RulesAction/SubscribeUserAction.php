@@ -5,6 +5,7 @@ namespace Drupal\jix_newsletter\Plugin\RulesAction;
 use Drupal;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\rules\Core\RulesActionBase;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class SubscribeUserAction
@@ -40,12 +41,14 @@ class SubscribeUserAction extends RulesActionBase
         $email = $entity->getElementData('gen_news_email');
         $config = Drupal::config('jix_newsletter.general.settings');
         $subscriptionUrl = $config->get('general_newsletter_url');
-        $request = Drupal::httpClient()->post($subscriptionUrl, array(
+        $response = Drupal::httpClient()->post($subscriptionUrl, array(
             'json' => array(
                 'email' => $email,
                 'name' => $names,
                 'newsletterId' => strval($newsletterId)
             )));
-        Drupal::logger('jix_newsletter')->info(json_encode($request));
+        if ($response instanceof ResponseInterface) {
+            Drupal::logger('jix_newsletter')->info(json_encode(json_decode($response, true)));
+        }
     }
 }
