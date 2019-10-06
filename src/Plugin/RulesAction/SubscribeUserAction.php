@@ -47,6 +47,5 @@ class SubscribeUserAction extends RulesActionBase
                 'newsletterId' => strval($newsletterId)
             )));
         Drupal::logger('jix_newsletter')->info(json_encode($request));
-
     }
 }
