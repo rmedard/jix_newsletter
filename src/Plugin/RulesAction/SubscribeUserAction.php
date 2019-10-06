@@ -39,25 +39,17 @@ class SubscribeUserAction extends RulesActionBase
     {
         $names = $entity->getElementData('gen_news_noms');
         $email = $entity->getElementData('gen_news_email');
-        $active = $entity->getElementData('gen_news_active');
         $config = Drupal::config('jix_newsletter.general.settings');
         $subscriptionUrl = $config->get('general_newsletter_url');
-        $response = null;
-        if (boolval($active)) {
-            $response = Drupal::httpClient()->post($subscriptionUrl, array(
-                'json' => array(
-                    'email' => $email,
-                    'name' => $names,
-                    'newsletterId' => strval($newsletterId)
-                )));
-        } else {
-            $response = Drupal::httpClient()->delete($subscriptionUrl, array(
-                'json' => array(
-                    'email' => $email
-                )));
-        }
+        $response = Drupal::httpClient()->post($subscriptionUrl, array(
+            'json' => array(
+                'email' => $email,
+                'name' => $names,
+                'newsletterId' => strval($newsletterId)
+            )));
         if ($response instanceof ResponseInterface) {
-            Drupal::logger('jix_newsletter')->info(json_encode($response));
+            Drupal::logger('jix_newsletter')->info('Response code: ' . $response->getStatusCode()
+                . ' | Phrase: ' . $response->getBody()->getContents());
         }
     }
 }
