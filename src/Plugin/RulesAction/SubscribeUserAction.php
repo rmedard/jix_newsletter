@@ -15,7 +15,7 @@ use Drupal\rules\Core\RulesActionBase;
  *     category = @Translation("Content"),
  *     context = {
  *      "names" = @ContextDefinition(
- *          value = "text",
+ *          value = "string",
  *          label = @Translation("Names"),
  *          description = @Translation("Names of the subscriber.")
  *       ),
