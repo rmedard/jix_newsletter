@@ -18,9 +18,10 @@ function jix_newsletter_webform_submission_insert(EntityInterface $entity)
         if (isset($subscriptionUrl)) {
             $email = $entity->getElementData('gen_news_email');
             $names = $entity->getElementData('gen_news_noms');
-            $request = Drupal::httpClient()->get($subscriptionUrl, array('query' => array(
+            $request = Drupal::httpClient()->post($subscriptionUrl, array('query' => array(
                 'email' => $email,
-                'fullname' => $names
+                'name' => $names,
+                'newsletterId' => strval(13)
             )));
             if (intval($request->getStatusCode() / 100) == 2) {
                 Drupal::logger('jix_newsletter')->info('Successfully subscribed ' .
