@@ -41,7 +41,7 @@ class SubscribeUserAction extends RulesActionBase
         $config = Drupal::config('jix_newsletter.general.settings');
         $subscriptionUrl = $config->get('general_newsletter_url');
         $request = Drupal::httpClient()->post($subscriptionUrl, array(
-            'form_params' => array(
+            'json' => array(
                 'email' => $email,
                 'name' => $names,
                 'newsletterId' => strval($newsletterId)
