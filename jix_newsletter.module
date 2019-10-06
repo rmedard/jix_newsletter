@@ -12,25 +12,25 @@ use Drupal\webform\Entity\WebformSubmission;
  */
 function jix_newsletter_webform_submission_insert(EntityInterface $entity)
 {
-    if ($entity instanceof WebformSubmission and $entity->bundle() == 'general_newsletter') {
-        $config = Drupal::config('jix_newsletter.general.settings');
-        $subscriptionUrl = $config->get('general_newsletter_url');
-        if (isset($subscriptionUrl)) {
-            $email = $entity->getElementData('gen_news_email');
-            $names = $entity->getElementData('gen_news_noms');
-            $request = Drupal::httpClient()->post($subscriptionUrl, array('query' => array(
-                'email' => $email,
-                'name' => $names,
-                'newsletterId' => strval(13)
-            )));
-            if (intval($request->getStatusCode() / 100) == 2) {
-                Drupal::logger('jix_newsletter')->info('Successfully subscribed ' .
-                    $email . ' to General Newsletter. Code: ' . $request->getStatusCode());
-            } else {
-                Drupal::logger('jix_newsletter')->error('Subscription of ' .
-                    $email . ' to General Newsletter failed. Code: ' .
-                    $request->getStatusCode() . ' | Reason: ' . $request->getReasonPhrase());
-            }
-        }
-    }
+//    if ($entity instanceof WebformSubmission and $entity->bundle() == 'general_newsletter') {
+//        $config = Drupal::config('jix_newsletter.general.settings');
+//        $subscriptionUrl = $config->get('general_newsletter_url');
+//        if (isset($subscriptionUrl)) {
+//            $email = $entity->getElementData('gen_news_email');
+//            $names = $entity->getElementData('gen_news_noms');
+//            $request = Drupal::httpClient()->post($subscriptionUrl, array('query' => array(
+//                'email' => $email,
+//                'name' => $names,
+//                'newsletterId' => strval(13)
+//            )));
+//            if (intval($request->getStatusCode() / 100) == 2) {
+//                Drupal::logger('jix_newsletter')->info('Successfully subscribed ' .
+//                    $email . ' to General Newsletter. Code: ' . $request->getStatusCode());
+//            } else {
+//                Drupal::logger('jix_newsletter')->error('Subscription of ' .
+//                    $email . ' to General Newsletter failed. Code: ' .
+//                    $request->getStatusCode() . ' | Reason: ' . $request->getReasonPhrase());
+//            }
+//        }
+//    }
 }
