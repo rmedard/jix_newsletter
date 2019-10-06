@@ -37,7 +37,8 @@ class UnsubscribeUserAction extends RulesActionBase
                 'email' => $email
             )));
         if ($response instanceof ResponseInterface) {
-            Drupal::logger('jix_newsletter')->info(json_encode($response));
+            Drupal::logger('jix_newsletter')->info('Response code: ' . $response->getStatusCode()
+                . ' | Phrase: ' . $response->getBody()->getContents());
         }
     }
 }
