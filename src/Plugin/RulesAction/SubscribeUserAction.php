@@ -31,7 +31,7 @@ use Drupal\rules\Core\RulesActionBase;
 class SubscribeUserAction extends RulesActionBase
 {
     /**
-     * @param EntityInterface $entity
+     * @param EntityInterface $entity subscription object
      * @param $newsletterId integer newsletter identifier
      */
     protected function doExecute(EntityInterface $entity, $newsletterId)
