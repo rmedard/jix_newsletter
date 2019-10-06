@@ -13,7 +13,7 @@ use Drupal\rules\Core\RulesActionBase;
  * @RulesAction(
  *     id = "rules_action_subscribe_user",
  *     label = @Translation("Subscribe User Action"),
- *     category = @Translation("Custom"),
+ *     category = @Translation("Content"),
  *     context = {
  *      "entity" = @ContextDefinition(
  *          value = "entity",
