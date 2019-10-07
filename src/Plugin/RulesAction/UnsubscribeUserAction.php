@@ -29,15 +29,13 @@ use Psr\Http\Message\ResponseInterface;
  */
 class UnsubscribeUserAction extends RulesActionBase
 {
-    protected function doExecute(EntityInterface $entity) {
+    protected function doExecute(EntityInterface $entity)
+    {
         $email = $entity->getElementData('gen_news_email');
         $config = Drupal::config('jix_newsletter.general.settings');
         $subscriptionUrl = $config->get('general_newsletter_url');
         try {
-            $response = Drupal::httpClient()->delete($subscriptionUrl, array(
-                'json' => array(
-                    'email' => $email
-                )));
+            $response = Drupal::httpClient()->delete($subscriptionUrl, array('json' => array('email' => $email)));
             if ($response instanceof ResponseInterface) {
                 Drupal::logger('jix_newsletter')->info('Response code: ' . $response->getStatusCode()
                     . ' | Phrase: ' . $response->getBody()->getContents());
